@@ -1,0 +1,31 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//bazel:copts.bzl", "lexy_copts")
+
+_detail_hdrs = [
+    "include/lexy/_detail/*.hpp",
+]
+
+cc_library(
+    name = "detail",
+    visibility = ["//:__subpackages__"],
+    includes = ["include"],
+    copts = lexy_copts,
+    hdrs = glob(_detail_hdrs),
+)
+
+cc_library(
+    name = "lexy",
+    visibility = ["//visibility:public"],
+    includes = ["include"],
+    copts = lexy_copts,
+    hdrs = glob(["include/lexy/**/*.hpp"], exclude = _detail_hdrs),
+    srcs = glob(["src/**/*.cpp"]),
+)
+
+cc_library(
+    name = "lexy_ext",
+    visibility = ["//visibility:public"],
+    includes = ["include"],
+    copts = lexy_copts,
+    hdrs = glob(["include/lexy_ext/*.hpp"]),
+)

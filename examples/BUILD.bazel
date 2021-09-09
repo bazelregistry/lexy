@@ -1,0 +1,17 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("//bazel:copts.bzl", "lexy_copts")
+
+_examples = [
+    "email",
+    "json",
+    "shell",
+    "tutorial",
+    "xml",
+]
+
+[cc_binary(
+    name = example,
+    copts = lexy_copts,
+    srcs = ["%s.cpp" % example],
+    deps = ["//:lexy"],
+) for example in _examples]
